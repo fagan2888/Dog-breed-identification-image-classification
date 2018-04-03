@@ -7,7 +7,6 @@ from tqdm import tqdm
 import random
 
 df = pd.read_csv('labels.csv')
-df.head()
 
 n = len(df)
 breed = set(df['breed'])
