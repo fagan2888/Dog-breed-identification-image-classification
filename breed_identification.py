@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import cv2
 from tqdm import tqdm
-import random
 
 df = pd.read_csv('labels.csv')
 
@@ -54,24 +53,17 @@ model = Model(inputs, x)
 model.compile(optimizer='adam',
               loss='categorical_crossentropy',
               metrics=['accuracy'])
-h = model.fit(features, y, batch_size=128, epochs=10, validation_split=0.1)
+h = model.fit(features, y, batch_size=128, epochs=100, validation_split=0.1)
 
-from IPython.display import SVG
-from keras.utils.vis_utils import model_to_dot
 
-SVG(model_to_dot(model, show_shapes=True).create(prog='dot', format='svg'))
-
-plt.figure(figsize=(10, 4))
-plt.subplot(1, 2, 1)
-plt.plot(h.history['loss'])
-plt.plot(h.history['val_loss'])
+plt.plot(h.history['train_loss'],'r-')
+plt.plot(h.history['val_loss'],'b*')
 plt.legend(['loss', 'val_loss'])
 plt.ylabel('loss')
 plt.xlabel('epoch')
 
-plt.subplot(1, 2, 2)
-plt.plot(h.history['acc'])
-plt.plot(h.history['val_acc'])
+plt.plot(h.history['train_acc'],'r-')
+plt.plot(h.history['val_acc'],'b*')
 plt.legend(['acc', 'val_acc'])
 plt.ylabel('acc')
 plt.xlabel('epoch')
